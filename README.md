@@ -1,5 +1,21 @@
 # Fairlight CMI Floppy Browser
-A file browser for the Fairlight CMI floppy disk images (i.e., HFE, IMD and IMG).
+A file browser for the Fairlight CMI floppy disk images (i.e., .HFE, .IMD and .IMG).
+
+# Functionalities
+- [x] Load .HFE, .IMD and .IMG disk images. To open a file, it is possible to double-click on the file (if this application is set as the default to open these file extensions), it is possible to drag & drop the file on the application or load the disk from the the menu of the application;
+- [x] Display/Modify disk information;
+- [x] Extract/Import files from/to disk with drag & drop;
+- [x] Delete files from disk;
+- [x] Rename files inside disk;
+- [x] Listen to .VC files by clicking on the speaker icon in the file row;
+- [x] Export .VC files to .WAV by clicking on the export icon in the file row;
+- [x] Import .WAV files to disk by drag & drop the .WAV from the desktop to the disk;
+- [x] Import multiple files by drag & drop or by selecting them from the "import files" menu;
+- [ ] Saving in different formats (at the moment, the original extension of the disk is kept);
+- [ ] Audio sampling (i.e., cutting 1 second of audio from a longer one);
+- [ ] Graphical improvements;
+
+All the changes must be confirmed by clicking the 'Save' button after modifying the disk.
 
 # Third-Party Licenses
 
