@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDocumentTypes</key>
+  <array>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>img</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>electron.icns</string>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>application/octet-stream</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>IMG file</string>
+      <key>CFBundleTypeOSTypes</key>
+      <array>
+        <string>IMG</string>
+      </array>
+      <key>CFBundleTypeRole</key>
+      <string>Editor</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>imd</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>electron.icns</string>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>application/octet-stream</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>IMD file</string>
+      <key>CFBundleTypeOSTypes</key>
+      <array>
+        <string>IMD</string>
+      </array>
+      <key>CFBundleTypeRole</key>
+      <string>Editor</string>
+    </dict>
+    <dict>
+      <key>CFBundleTypeExtensions</key>
+      <array>
+        <string>hfe</string>
+      </array>
+      <key>CFBundleTypeIconFile</key>
+      <string>electron.icns</string>
+      <key>CFBundleTypeMIMETypes</key>
+      <array>
+        <string>application/octet-stream</string>
+      </array>
+      <key>CFBundleTypeName</key>
+      <string>HFE file</string>
+      <key>CFBundleTypeOSTypes</key>
+      <array>
+        <string>HFE</string>
+      </array>
+      <key>CFBundleTypeRole</key>
+      <string>Editor</string>
+    </dict>
+  </array>
+</dict>
+</plist>

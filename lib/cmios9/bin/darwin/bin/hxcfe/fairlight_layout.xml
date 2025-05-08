@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- HxC Floppy Emulator Disk Layout -->
+<disk_layout>
+	<disk_layout_name>FAIRLIGHT_CMI2x</disk_layout_name>
+	<disk_layout_description>FAIRLIGHT_CMI2x Disk Layout</disk_layout_description>
+	<prefered_file_extension>IMG</prefered_file_extension>
+	<interface_mode>0x07</interface_mode>
+	<file_size>512512</file_size>
+	<layout>
+		<number_of_track>77</number_of_track>
+		<number_of_side>2</number_of_side>
+		<format>IBM_FM</format>
+		<start_sector_id>1</start_sector_id>
+		<sector_per_track>26</sector_per_track>
+		<sector_size>128</sector_size>
+		<interleave>1</interleave>
+		<skew_per_side>0</skew_per_side>
+		<skew_per_track>0</skew_per_track>
+		<formatvalue>0xF6</formatvalue>
+		<gap3>32</gap3>
+		<bitrate>500000</bitrate>
+		<pregap>0</pregap>
+		<rpm>360</rpm>
+	</layout>
+</disk_layout>

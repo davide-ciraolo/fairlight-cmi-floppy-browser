@@ -1,0 +1,448 @@
+cmios9: access to Fairlight QDOS, OS-9 RBF, and MDR-DOS floppy/hard disk image files and devices
+Copyright (c) 2001-2023 by Klaus Michael Indlekofer. All rights reserved.
+Note: Special restrictions apply. See disclaimers below and within the distribution.
+
+Release cmios9-3.4.2 (10-APR-2023)
+
+
+
+Usage: cmios9 [-h] [-r] [-b <dev_blksiz>] [-s <startbyte>] [-l|-L <stepbytes>] [-o <owner>] [-q <qdosnr>] [-x] [-K <lock-file>] <device/image-file> ...
+       -h   print this info
+       -r   read-only
+       -b   set device blocksize
+       -s   set start byte offset
+       -l   enable pseudo-LUNs (contiguous)
+       -L   enable pseudo-LUNs (starting at multiples of <stepbytes>)
+       -o   set owner ID
+       -q   QDOS-only mode for first device: number of partitions
+       -x   enable file access via "*<hex-address>"
+       -K   lock-file
+
+
+
+Commands:
+---------
+
+  help [<cmd>]			print help information for a command
+    =man
+
+  exit				exit program
+    =quit
+    =bye
+    =q
+
+  restart			restart program
+
+  restartkeep			restart program (keep current path)
+    =sync
+
+  newlabel			write new label to partition
+
+  newfs [<partition-root>]	format partition (current if no <partition-root>) with new filesystem
+    =pformat
+
+  newfsosk [<partition-root>]	format partition (current if no <partition-root>) with new filesystem for OSK
+    =pformatosk
+
+  linkboot			link/unlink a bootstrap file to the current partition
+
+  linkbootosk			link/unlink a bootstrap file to the current partition for OSK
+
+  linkpart			link/unlink a partition table file to the current partition
+
+  editpart			edit partitions
+
+  lsdevs			print information about all pseudo SCSI-devices
+
+  lspart			print information about all partitions
+    =mount
+
+  partinfo			print detailed information about a partition
+    =part
+
+  qlinkov <ovnr> [<path>]	set QDOS overlay file
+
+  qsetboot			set bootstrap for current partition
+
+  setmap			set/clear blocks in allocation bitmap
+
+  lsfree			print filesystem information about all partitions
+    =df
+
+  free [<partition-root>]	print detailed information about a filesystem
+
+  pwd				print current directory path
+
+  dir [<dir-path>]		list files of a directory
+    =ls
+
+  dirrec [<dir-path>]		list files of a directory and all sub-directories recursively
+    =lsrec
+
+  dirtree [<dir-path>]		list directory tree recursively
+    =lstree
+    =du
+
+  touch <path>			touch file/directory
+
+  fdes <path>			print detailed information about a file/directory
+
+  fdesrec [<path>]		print detailed information about all files/sub-directories recursively
+    =fdestree
+
+  chd [<dir-path>]		change current directory and/or partition
+    =cd
+
+  makdir <dir-path>		make new directory
+    =mkdir
+
+  deldir <dir-path>		delete directory if empty
+    =rmdir
+
+  del <file-path>		delete file (use * for all files)
+    =rm
+
+  delrec <dir-path>		delete all files and directories in directory tree
+    =deltree
+    =rmrec
+    =rmtree
+
+  setattr <attr> <path>		modify attributes of file or directory
+    =attr
+
+  setown <owner> <path>		change owner of file or directory
+    =chown
+
+  move <src-path> <dest-path>	move file or directory
+    =mv
+    =rename
+
+  link <src-path> <dest-path>	hard link file or directory
+    =ln
+
+  creat <path> <Bytes> [<val>]	create new file
+
+  extend <path> <Bytes>		extend file size
+
+  pexport <image-file>		export raw blocks from current partition to external file
+    =pget
+
+  pimport <image-file> [<dest-root>]
+				import raw blocks to partition (current if no <dest-root>) from external file
+    =pput
+
+  perase [<dest-root>]		erase partition (current if no <dest-root>)
+    =pzero
+
+  pback <src-root> <dest-root>	copy partition
+    =pcopy
+
+  export <path>			export file or directory to external file (use * for all files)
+    =get
+
+  aexport <path>		export file to external file with ASCII conversion (use * for all files)
+    =aget
+
+  fdexport <path>		export file to external file with file descriptor (use * for all files)
+    =fdget
+
+  tarc <tar-file> [<path>]	export directory tree to external tar file
+    =tarexport
+    =target
+
+  tarcdev <tar-file>		export directory trees of all partitions on current pseudo SCSI-device to external tar file
+    =tarexportdev
+    =targetdev
+
+  tarcall <tar-file>		export directory trees of all partitions to external tar file
+    =tarexportall
+    =targetall
+
+  import <path>			import file from external file (use * for all local files)
+    =put
+
+  aimport <path>		import file from external file with ASCII conversion (use * for all local files)
+    =aput
+
+  fdimport <path>		import file from external file with file descriptor (use * for all local files)
+    =fdput
+
+  tarx <tar-file>		import directory tree from external tar file
+    =tarimport
+    =tarput
+
+  copy <src-path> <dest-path>	copy file (use * for all files)
+    =cp
+
+  copyrec <src-path> <dest-path>
+				copy directory tree
+    =copytree
+    =cprec
+    =cptree
+
+  info <path>			print info about file type
+
+  vinfo <path>			print verbose info about file type
+
+  ident <path>                  print OS-9/OSK module info
+
+  sq2tk <path> [<path> ...] <out-path>
+				convert and merge SQ/TK files to CUE-LIST TK file
+
+  sq2smf <path> [<path> ...] <out-path>
+				convert and merge SQ/TK files to SMF (MIDI) file
+    =sq2mid
+
+  mdrpasswd <mt-path>           set MDR MT passwd and attributes
+
+  vc2wav <voice-path> [<wav-path> [<subvoice-nr>]]
+				export voice to WAV-file (all if no subvoice-nr specified, use * for all files)
+    =vcexport
+    =vcget
+
+  mt2wav <mt-path> [<wav-path> [<wnr>]]
+				export MDR MT wave to WAV-file (all if no wnr specified, use * for all files)
+    =mtexport
+    =mtget
+
+  wav2vc2 <wav-path> [<voice-path>]
+				import WAV-file to Series IIx voice (use * for all local files)
+
+  wav2vc3 <wav-path> [<voice-path>]
+				import WAV-file to Series III voice (use * for all local files)
+
+  list <path>			list ASCII content of file
+    =more
+    =less
+
+  dump <path>			print hexdump of file
+    =hd
+
+  bined <path>			binary editor for file
+
+  pbined [<dest-root>]		binary editor for partition (current if no <dest-root>)
+
+  lchd <dir-path>		change current local (external) directory/device
+    =lcd
+
+  ldir				list files in current local (external) directory
+    =lls
+
+  lock				acquire lock
+
+  unlock			release lock
+
+
+
+Note: multiple devices/image files can be specified
+
+Note: in order to move a file from one partition/filesystem to another:
+      use copy and delete
+
+Note: within cygwin shell use \\\\.\\ instead of \\.\ for Windows drives
+
+Note: With the "-x" option, files/directories can also be accessed via "*<hex-address>" in path names,
+      where <hex-address> is the hexadecimal value of the file descriptor address (for OS-9 RBF)
+      or the file number (for MDR-DOS and QDOS), as shown in the directory listing.
+      This can be used e.g. to access files with corrupted or non-typeable names or lost files.
+      Example: rename file with bad name with file descriptor at 0x39f80  ->  move *39f80 goodname
+      Warning: use at your own risk, inadequate addresses can lead to filesystem corruption or data loss!
+
+Note: option "-L 0x100000000" corresponds to 4GB steps
+
+Note: for shared access to devices or image-files,
+      a lock-file ("-K" option and "lock"/"unlock" commands) can be used for exclusive access
+      and the "restartkeep" command can be used to rescan devices/partitions/directories
+
+
+
+File attributes:
+----------------
+
+OS-9:
+  set/clear mode bits: specify +/- followed by mode-letter:
+    r w e R W E S
+
+QDOS:
+  set/clear mode bits: specify +/- followed by mode-letter:
+    w d s n
+  set file format:
+    userdef defrec binload binrec arec abinrec
+  set loadable image options: specify option followed by number:
+    lb= sl= la= sa=
+
+
+
+Examples:
+---------
+
+  Access image files
+  ->  cmios9 disk1.img ...
+
+  Access image file "c:\cmistuff\mycmipartition.backup"
+  ->  cmios9 c:\cmistuff\mycmipartition.backup
+
+  Access to QDOS image files (2 floppies in first file here)
+  ->  cmios9 -q2 fl0.img ...
+
+  Access UNIX drive "/dev/da0"
+  ->  cmios9 -b 512 /dev/da0
+
+  Access Mac OSX/Darwin CD-ROM drive
+  ->  cmios9 -r -b 2048 /dev/disk1s0
+
+  Access FreeBSD CD-ROM drive
+  ->  cmios9 -r -b 2048 /dev/acd0
+
+  Access Windows physical drive 2 (if supported by the operating system)
+  (Please note that logical drives like "\\.\g:" won't work
+  since they correspond to PC-partitions.)
+  ->  cmios9 -b 512 \\.\physicaldrive2
+
+  Access Windows CD-ROM drive 0 (if supported by the operating system)
+  ->  cmios9 -b 2048 \\.\cdrom0
+
+
+
+OS-9 RBF and MDR-DOS filesystem sizes:
+-------------------------------------
+
+supported blocksize = 0x0100 bytes (256B) ... 0x8000 bytes (32KB)
+supported max. block count = 0xffffff
+=> max. filesystem size = 0x7fffff8000 bytes (approx. 512GB)
+
+Note:
+Legacy systems may restict the filesystem size to <4GB and the blocksize to 256B.
+With blocksize=0100 (256B), a totsize of 0xffffff corresponds to approx. 4GB,
+with blocksize=0400 (1KB), a totsize of 0x3fffff corresponds to approx. 4GB.
+
+Note:
+upper limit of file size = 0xffffffff bytes (approx. 4GB), even for larger filesystem sizes
+
+
+
+How to initialize an OS-9 RBF disk for CMI Series III from scratch:
+------------------------------------------------------------------
+
+1.) newfs /sc00 (os9, blocksize=0100 totsize=whole disk, clustersize=1, filesyssize=0100)
+2.) cd /sc00
+    mkdir SYS
+3.) cd /sc00/sys
+    creat parttab 100 0
+    linkpart (parttab)
+4.) editpart (for all k- and c-partitions you need)
+5.) cd /sc00/sys
+    put bootfile
+    linkboot (bootfile)
+6.) newfs /... (for all k- and c-partitions you need)
+
+Note:
+A partition start and size should be cluster-aligned.
+A CMI Series III floppy (k-partition) has 0x10cc00 bytes (approx. 1MB).
+An IOMEGA ZIP100 disk has 0x6000000 bytes (96MB).
+For removeable media it is advantageous to set totsize to 0xffffff,
+whereas filesyssize should be set to the actual available space.
+
+
+
+How to initialize an OS-9 RBF disk for MFX3plus:
+-----------------------------------------------
+
+newfsosk /sc00 (blocksize=400, totsize=whole disk, clustersize=80, filesyssize=whole disk)
+
+
+
+Compilation:
+------------
+
+Depending on the operating system and the programming environment,
+use Makefile (for make) or Makefile.nmake (for nmake) or the .vcproj file.
+
+
+
+For more infos please visit http://members.tripod.com/kmi9000/kmi_cmi.htm
+Email: m.indlekofer@gmx.de
+
+
+
+---
+The following holds for all files in this distribution (unless stated otherwise on an
+individual basis for each file and statement):
+
+These program/data/document/HTML/picture/media files (materials) are distributed in the
+hope that they will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty
+of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. In no event shall the author be
+liable for any direct, indirect, incidental, special, exemplary, or consequential damages
+(including, but not limited to, procurement of substitue goods or services; loss of use,
+data, or profits; or business interruption) however caused and on any theory of liability,
+whether in contract, strict liability, or tort (including negligence or otherwise) arising
+in any way out of the use of data/information/software from this distribution, even if
+advised of the possibility of such damage. 
+
+The contents of this distribution are intended for educational, non-commercial purposes
+only. Materials contained herein are property of their respective owners.
+All brand names and trademarks are property of their respective owners.
+If any copyrighted works/trademarks have been used, please contact the authors
+and the item will be either removed or properly credited (at the copyright/trademark
+owner's discretion). We have no intention of violating any copyrights or trademarks.
+This distribution might use inlining and deep-linking, i.e. links in this distribution
+might lead directly to materials on other web sites/distributions (in which case the
+target page normally should be listed/credited in a "links" section). The author does
+not take responsibility for the contents of any links referred to. We do not necessarily 
+endorse, sanction, support, encourage, verify or agree with the contents, opinions or
+statements of/on any of the linked pages. These statements hold for all links/references
+in all files in this distribution. We are in no way affiliated with any
+companies/institutions/individuals which might be mentioned in any manner in this
+distribution.
+
+The author does not take responsibility for incorrect, incomplete or misleading information.
+Statements are to be considered as the author's free personal opinion. The author does not
+necessarly possess any of the items mentioned in files in this distribution.
+
+Files (and the information therein) created by the authors are copyright
+(c) by the authors. Unless protected/restricted otherwise, the author permits
+reproduction/redistribution of material contained in this distribution under the condition
+that the item is properly credited. Links to items/materials in this distribution are welcome.
+Projects/publications/papers that make use of materials, programs, or generated output
+of this distribution must properly credit the author and mention the usage of this distribution.
+Please contact the authors for comments or further questions
+and permission to use materials/information from this distribution.
+
+
+
+---
+This product includes software developed by the University of California, Berkeley
+and its contributors.
+
+Copyright (c) 1987-2002 The Regents of the University of California.
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice,
+   this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+3. [rescinded 22 July 1999]
+4. Neither the name of the University nor the names of its contributors
+   may be used to endorse or promote products derived from this software
+   without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS ``AS
+IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
+THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL THE REGENTS OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+
+
+---
+End of file
