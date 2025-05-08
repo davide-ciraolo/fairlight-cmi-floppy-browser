@@ -1,5 +1,6 @@
 # Fairlight CMI Floppy Browser
 A file browser for the Fairlight CMI floppy disk images (i.e., .HFE, .IMD and .IMG).
+This software is made to ease the process of managing CMI floppies and their contents. The application allows users to intuitively open .IMD, .HFE and .IMG floppy disk images and navigate through .VC, .CO, .IN and .RS files contained inside them. It is possible to copy, extract, import and move files between floppies in a similar way as you do with normal desktop folders.
 
 # Functionalities
 - [x] Load .HFE, .IMD and .IMG disk images. To open a file, it is possible to double-click on the file (if this application is set as the default to open these file extensions), it is possible to drag & drop the file on the application or load the disk from the the menu of the application;
