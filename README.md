@@ -18,6 +18,12 @@ This software is made to ease the process of managing CMI floppies and their con
 
 All the changes must be confirmed by clicking the 'Save' button after modifying the disk.
 
+# Screenshots
+
+Application after opening the ANIMALS.IMD image disk file.
+
+![Opening the ANIMALS.IMD image disk file.](/docs/app_screenshot.png?raw=true "Opening the ANIMALS.IMD image disk file")
+
 # Third-Party Licenses
 
 This project includes third-party binaries or libraries. Each of them is governed by its own license, which can be found in the `licenses/` directory.

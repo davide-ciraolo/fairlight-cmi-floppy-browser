@@ -1,8 +1,8 @@
 {
-  "name": "fairlight-cmi2x-floppy-browser",
-  "productName": "Fairlight CMI IIx Floppy Browser",
+  "name": "fairlight-cmi-floppy-browser",
+  "productName": "Fairlight CMI Floppy Browser",
   "version": "1.0.0",
-  "description": "This software is made with the purpose of ease the process of managing CMI2x floppies and their contents. The application allows users to intuitively open IMD, HFE and IMG floppy disk images and navigate through VC, CO, IN and RS files contained inside them. It is possible to copy, extract, import and move files between floppies in a similar way as you do with normal desktop folders.",
+  "description": "This software is made with the purpose of ease the process of managing CMI floppies and their contents. The application allows users to intuitively open IMD, HFE and IMG floppy disk images and navigate through VC, CO, IN and RS files contained inside them. It is possible to copy, extract, import and move files between floppies in a similar way as you do with normal desktop folders.",
   "main": ".webpack/main",
   "scripts": {
     "start": "electron-forge start",
