@@ -14,7 +14,7 @@ This software is made to ease the process of managing CMI floppies and their con
 - [x] Export .VC files to .WAV by clicking on the export icon in the file row;
 - [x] Import .WAV files to disk by drag & drop the .WAV from the desktop to the disk;
 - [x] Import multiple files by drag & drop or by selecting them from the "import files" menu;
-- [ ] Saving in different formats (at the moment, the original extension of the disk is kept);
+- [ ] Saving in different formats (at the moment, if the source file is an .IMG it will be saved as .IMG, otherwise it will be saved as .IMD);
 - [ ] Audio sampling (i.e., cutting 1 second of audio from a longer one);
 - [ ] Graphical improvements;
 

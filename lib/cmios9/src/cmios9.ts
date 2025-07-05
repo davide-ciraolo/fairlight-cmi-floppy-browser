@@ -167,7 +167,9 @@ class cmios9 {
             return true;
         }
 
-        const command: string = 'cd "' + cmios9.BIN_PATH + '" && ' + cmios9.hxcfeCommand + ' -finput:"' + dir.imgPath + '"' + cmios9.HXCFE_IMD_LOADER + cmios9.HXCFE_DISK_LAYOUT + ' -foutput:"' + dir.path + '"';
+        const savePath = path.join(path.dirname(dir.path), path.basename(dir.path).split('.')[0] + '.IMD')
+
+        const command: string = 'cd "' + cmios9.BIN_PATH + '" && ' + cmios9.hxcfeCommand + ' -finput:"' + dir.imgPath + '"' + cmios9.HXCFE_IMD_LOADER + cmios9.HXCFE_DISK_LAYOUT + ' -foutput:"' + savePath + '"';
         await cmios9._createProcess(command, []);
         if(fs.existsSync(dir.path))
             return true;
