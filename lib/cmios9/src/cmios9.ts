@@ -21,16 +21,24 @@ class cmios9 {
     // TODO: to verify if it works on arm64 macs (it should as per https://sourceforge.net/p/hxcfloppyemu/code/2634/)
     static HXCFE_PATH_MAC: string = '"' + path.join(this.BIN_PATH, 'hxcfe/App/hxcfe') + '"';
 
+    static FLOPTOOL_PATH_WINDOWS: string = '"' + path.join(this.BIN_PATH, 'floptool.exe') + '"'
+
+    // TODO: add binary for MAC
+    static FLOPTOOL_PATH_MAC: string = ''
+
+
     static DISK_LAYOUT_PATH_WINDOWS: string = 'fairlight_layout.xml'; //path.normalize('"' + path.join(this.BIN_PATH, 'fairlight_layout.xml') + '"');
     static DISK_LAYOUT_PATH_MAC: string = 'hxcfe/fairlight_layout.xml'; //path.normalize('"' + path.join(this.BIN_PATH, 'hxcfe/fairlight_layout.xml') + '"');
 
     static HXCFE_RAW_LOADER: string = ' -conv:RAW_LOADER ';
     static HXCFE_IMD_LOADER: string = ' -conv:IMD_IMG ';
     static HXCFE_HFE_LOADER: string = ' -conv:HXC_HFE ';
+    static HXCFE_MFI_LOADER: string = ' -conv:MAME_MFI ';
     static HXCFE_DISK_LAYOUT: string = ' -uselayout:' + (process.platform == 'darwin' ? cmios9.DISK_LAYOUT_PATH_MAC : cmios9.DISK_LAYOUT_PATH_WINDOWS)
 
     static FLAGS: string = ' -q1 ';
 
+    static floptoolCommand: string = process.platform == 'darwin' ? cmios9.FLOPTOOL_PATH_MAC : cmios9.FLOPTOOL_PATH_WINDOWS;
     static cmiosCommand: string = process.platform == 'darwin' ? cmios9.CMIOS_PATH_MAC : cmios9.CMIOS_PATH_WINDOWS;
     static hxcfeCommand: string = process.platform == 'darwin' ? cmios9.HXCFE_PATH_MAC : cmios9.HXCFE_PATH_WINDOWS;
 
@@ -178,7 +186,28 @@ class cmios9 {
             return img_path;
         }
 
-        const command: string = 'cd "' + cmios9.BIN_PATH + '" && ' + cmios9.hxcfeCommand + ' -finput:"' + floppy_path + '"' + cmios9.HXCFE_RAW_LOADER + ' -foutput:"' + img_path + '"';
+        let command: string = 'cd "' + cmios9.BIN_PATH + '" && ' + cmios9.hxcfeCommand + ' -finput:"' + floppy_path + '"' + cmios9.HXCFE_RAW_LOADER + ' -foutput:"' + img_path + '"';
+
+        if(path.extname(floppy_path).toLowerCase() == '.mfm' && fs.existsSync(floppy_path)){
+
+            // TODO: temporay, the floptool for darwin should be added in the future
+            if(process.platform == 'darwin') {
+                throw Error('Unsupported format on MacOS.');
+            }
+
+            const mfi_path: string = tmp.tmpNameSync({postfix: '.MFI'});
+            const imd_path: string = tmp.tmpNameSync({postfix: '.IMD'});
+            command = 'cd "' + cmios9.BIN_PATH + '" && ' + cmios9.floptoolCommand + ' flopconvert mfm mfi "' + floppy_path + '" "' + mfi_path + '"' +
+            ' && ' + cmios9.hxcfeCommand + ' -finput:"' + mfi_path + '"' + cmios9.HXCFE_IMD_LOADER + ' -foutput:"' + imd_path + '"' +
+            ' && ' + cmios9.hxcfeCommand + ' -finput:"' + imd_path + '"' + cmios9.HXCFE_RAW_LOADER + ' -foutput:"' + img_path + '"';
+        } else if(path.extname(floppy_path).toLowerCase() == '.mfi' && fs.existsSync(floppy_path)){
+            const imd_path: string = tmp.tmpNameSync({postfix: '.IMD'});
+            command = 'cd "' + cmios9.BIN_PATH + '" && ' + cmios9.hxcfeCommand + ' -finput:"' + floppy_path + '"' + cmios9.HXCFE_IMD_LOADER + ' -foutput:"' + imd_path + '"' +
+            ' && ' + cmios9.hxcfeCommand + ' -finput:"' + imd_path + '"' + cmios9.HXCFE_RAW_LOADER + ' -foutput:"' + img_path + '"';
+        }
+
+        console.log(command);
+
         await cmios9._createProcess(command, []);
         if(fs.existsSync(img_path))
             return img_path;

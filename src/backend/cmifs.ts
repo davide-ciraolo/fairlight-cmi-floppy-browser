@@ -5,6 +5,7 @@ import cmios9 from '../../lib/cmios9/src/cmios9';
 import CmiFile from '../../lib/cmios9/src/CmiFile';
 import CmiDirectory from '../../lib/cmios9/src/CmiDirectory';
 import * as tmp from 'tmp';
+import { platform } from 'os';
 tmp.setGracefulCleanup();
 
 // export const getFiles = async (img_path: string): Promise<CmiFile[]> => {
@@ -27,9 +28,15 @@ tmp.setGracefulCleanup();
 // }
 
 export const openFileDialog = async (): Promise<CmiDirectory|undefined> => {
+
+  let filters = [{extensions: ['HFE', 'IMD', 'IMG', 'MFM', 'MFI'], name: '*'}];
+  if(process.platform == 'darwin'){ //TODO: MFM is not supported in darwin for now. The floptool binary is required.
+    filters = [{extensions: ['HFE', 'IMD', 'IMG', 'MFI'], name: '*'}];
+  }
+
   const result = await dialog.showOpenDialog({
     properties: ['openFile'], //, 'multiSelections'],
-    filters: [{extensions: ['HFE', 'IMD', 'IMG'], name: '*'}]
+    filters: filters
   });
   if(result.canceled)
     return undefined;
